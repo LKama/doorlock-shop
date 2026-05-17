@@ -6,7 +6,7 @@ from fastapi_mail import (
 
 conf = ConnectionConfig(
   MAIL_USERNAME="doorlockofficial1@gmail.com",
-  MAIL_PASSWORD="hnzz bbmo vhdc ozkc",
+  MAIL_PASSWORD="hnzzbbmovhdcozkc",
   MAIL_FROM="doorlockofficial1@gmail.com",
   MAIL_PORT="587",
   MAIL_SERVER="smtp.gmail.com",
@@ -20,6 +20,9 @@ async def send_order_email(
     email: str,
     order_id: int
 ):
+  
+  print("EMAIL TASK STARTED")
+  
   message = MessageSchema(
     subject="DoorLock Shop Order",
     recipients=[email],
