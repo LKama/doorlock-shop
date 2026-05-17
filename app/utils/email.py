@@ -8,10 +8,11 @@ conf = ConnectionConfig(
   MAIL_USERNAME="doorlockofficial1@gmail.com",
   MAIL_PASSWORD="hnzzbbmovhdcozkc",
   MAIL_FROM="doorlockofficial1@gmail.com",
-  MAIL_PORT="587",
-  MAIL_SERVER="smtp.gmail.com",
+  MAIL_PORT = 587,
+  MAIL_SERVER = "smtp.gmail.com",
+  MAIL_TLS = True,
+  MAIL_SSL = False,
   MAIL_STARTTLS=True,
-  MAIL_SSL_TLS=False,
   USE_CREDENTIALS=True,
   VALIDATE_CERTS=True
 )
@@ -22,7 +23,7 @@ async def send_order_email(
 ):
   
   print("EMAIL TASK STARTED")
-  
+
   message = MessageSchema(
     subject="DoorLock Shop Order",
     recipients=[email],
