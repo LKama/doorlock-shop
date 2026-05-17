@@ -65,15 +65,11 @@ def create_order(
 
   db.commit()
 
-  print("ABOUT TO SEND EMAIL TASK")
-
   background_tasks.add_task(
     send_order_email,
     current_user.email,
     order.id
-)
-
-  print("EMAIL TASK ADDED")
+  )
 
   return {
     "message": "Order created",
