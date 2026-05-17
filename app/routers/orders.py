@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -16,9 +16,10 @@ router = APIRouter(
 )
 
 @router.post("/create")
-async def create_order(
+def create_order(
   address: str,
   phone: str,
+  background_tasks: BackgroundTasks,
   current_user = Depends(get_current_user),
   db: Session = Depends(get_db)
 ):
@@ -64,7 +65,8 @@ async def create_order(
 
   db.commit()
 
-  await send_order_email(
+  background_tasks.add_task(
+    send_order_email,
     current_user.email,
     order.id
   )
