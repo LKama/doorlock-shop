@@ -6,7 +6,7 @@ from fastapi_mail import (
 
 conf = ConnectionConfig(
   MAIL_USERNAME="doorlockofficial1@gmail.com",
-  MAIL_PASSWORD="mqgj ashp ruzu qrdc",
+  MAIL_PASSWORD="mqgjashpruzuqrdc",
   MAIL_FROM="doorlockofficial1@gmail.com",
   MAIL_PORT="587",
   MAIL_SERVER="smtp.gmail.com",
