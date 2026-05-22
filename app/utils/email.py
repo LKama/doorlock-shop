@@ -1,36 +1,61 @@
-from fastapi_mail import (
-  FastMail,
-  MessageSchema,
-  ConnectionConfig
-)
+import smtplib
 
-conf = ConnectionConfig(
-  MAIL_USERNAME="doorlockofficial1@gmail.com",
-  MAIL_PASSWORD="hnzzbbmovhdcozkc",
-  MAIL_FROM="doorlockofficial1@gmail.com",
-  MAIL_PORT="587",
-  MAIL_SERVER="smtp.gmail.com",
-  MAIL_STARTTLS=True,
-  MAIL_SSL_TLS=False,
-  USE_CREDENTIALS=True,
-  VALIDATE_CERTS=True
-)
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-async def send_order_email(
-    email: str,
-    order_id: int
+
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+
+EMAIL_ADDRESS = "doorlockofficial1@gmail.com"
+
+EMAIL_PASSWORD = "hnzzbbmovhdcozkc"
+
+
+def send_order_email(
+  to_email: str,
+  order_id: int
 ):
-  message = MessageSchema(
-    subject="DoorLock Shop Order",
-    recipients=[email],
-    body=f"""
-    Thank you for your order!
 
-    Order ID: {order_id}
-    """,
-    subtype="plain"
-  )
+    try:
 
-  fm = FastMail(conf)
+      subject = "DoorLock Shop Order"
 
-  await fm.send_message(message)
+      body = f"""
+        Thank you for your order!
+
+        Order ID: {order_id}
+
+        DoorLock Shop
+        """
+
+      msg = MIMEMultipart()
+
+      msg["From"] = EMAIL_ADDRESS
+      msg["To"] = to_email
+      msg["Subject"] = subject
+
+      msg.attach(
+        MIMEText(body, "plain")
+      )
+
+      server = smtplib.SMTP(
+        SMTP_SERVER,
+        SMTP_PORT
+      )
+
+      server.starttls()
+
+      server.login(
+        EMAIL_ADDRESS,
+        EMAIL_PASSWORD
+      )
+
+      server.send_message(msg)
+
+      server.quit()
+
+      print("EMAIL SENT SUCCESS")
+
+    except Exception as e:
+      print("EMAIL ERROR:", e)
