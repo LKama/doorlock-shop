@@ -1,15 +1,6 @@
-import smtplib
+import resend
 
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-
-EMAIL_ADDRESS = "doorlockofficial1@gmail.com"
-
-EMAIL_PASSWORD = "hnzzbbmovhdcozkc"
+resend.api_key = "re_8jd3HPPn_67BihZjCwjY2PGLD8Vjrydso"
 
 
 def send_order_email(
@@ -17,45 +8,28 @@ def send_order_email(
   order_id: int
 ):
 
-    try:
+  try:
 
-      subject = "DoorLock Shop Order"
+    params = {
 
-      body = f"""
-        Thank you for your order!
+      "from":
+        "DoorLock Shop <onboarding@resend.dev>",
 
-        Order ID: {order_id}
+      "to": [to_email],
 
-        DoorLock Shop
-        """
+      "subject":
+        "DoorLock Shop Order",
 
-      msg = MIMEMultipart()
+      "html": f"""
+        <h1>Thank you for your order!</h1>
 
-      msg["From"] = EMAIL_ADDRESS
-      msg["To"] = to_email
-      msg["Subject"] = subject
+        <p>Order ID: {order_id}</p>
+      """
+    }
 
-      msg.attach(
-        MIMEText(body, "plain")
-      )
+    resend.Emails.send(params)
 
-      server = smtplib.SMTP(
-        SMTP_SERVER,
-        SMTP_PORT
-      )
+    print("EMAIL SENT SUCCESS")
 
-      server.starttls()
-
-      server.login(
-        EMAIL_ADDRESS,
-        EMAIL_PASSWORD
-      )
-
-      server.send_message(msg)
-
-      server.quit()
-
-      print("EMAIL SENT SUCCESS")
-
-    except Exception as e:
-      print("EMAIL ERROR:", e)
+  except Exception as e:
+    print("EMAIL ERROR:", e)
