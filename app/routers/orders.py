@@ -1,3 +1,5 @@
+import threading
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -64,10 +66,13 @@ def create_order(
 
   db.commit()
 
-  send_order_email(
-    current_user.email,
-    order.id
-  )
+  threading.Thread(
+    target=send_order_email,
+    args=(
+      current_user.email,
+      order.id
+    )
+  ).start()
 
   return {
     "message": "Order created",
