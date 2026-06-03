@@ -66,7 +66,7 @@ def send_order_email(
       "from": "DoorLock Shop <onboarding@resend.dev>",
 
       "to":
-        ["doorlockofficial1@gmail.com"],
+        ["lord.kam.2006@gmail.com"],
 
       "subject": f"Order #{order_id}",
 
