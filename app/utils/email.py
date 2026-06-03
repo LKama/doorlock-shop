@@ -1,6 +1,6 @@
 import resend
 
-resend.api_key = "ТВОЙ_RESEND_API_KEY"
+resend.api_key = "re_8jd3HPPn_67BihZjCwjY2PGLD8Vjrydso"
 
 
 def send_order_email(
@@ -14,71 +14,69 @@ def send_order_email(
 
   try:
 
-      html = f"""
+    html = f"""
       <h1>DoorLock Shop</h1>
 
-      <h2>New Order #{order_id}</h2>
+      <h2>Новый заказ №{order_id}</h2>
 
-      <p><b>Customer Email:</b> {user_email}</p>
+      <p><b>Email клиента:</b> {user_email}</p>
 
-      <p><b>Phone:</b> {phone}</p>
+      <p><b>Телефон:</b> {phone}</p>
 
-      <p><b>Address:</b> {address}</p>
+      <p><b>Адрес доставки:</b> {address}</p>
 
       <hr>
 
-      <h2>Products</h2>
+      <h2>Товары</h2>
       """
 
-      for product in products:
-
-        html += f"""
-        <div style="margin-bottom:20px">
-
-          <img
-            src="{product['image_url']}"
-            width="150"
-          >
-
-          <p>
-            <b>{product['name']}</b>
-          </p>
-
-          <p>
-            Quantity: {product['quantity']}
-          </p>
-
-          <p>
-            Price: {product['price']} ₽
-          </p>
-
-        </div>
-        """
+    for product in products:
 
       html += f"""
-      <hr>
+      <div style="margin-bottom:20px">
 
-      <h2>Total: {total} ₽</h2>
+        <img
+          src="{product['image_url']}"
+          width="150"
+        >
+
+        <p>
+          <b>{product['name']}</b>
+        </p>
+
+        <p>
+          Quantity: {product['quantity']}
+        </p>
+
+        <p>
+          Price: {product['price']} ₽
+        </p>
+
+      </div>
       """
 
-      params = {
+    html += f"""
+    <hr>
 
-        "from":
-          "DoorLock Shop <onboarding@resend.dev>",
+    <h2>Total: {total} ₽</h2>
+    """
 
-        "to":
-          ["doorlockofficial1@gmail.com"],
+    params = {
 
-        "subject":
-          f"New Order #{order_id}",
+      "from": "DoorLock Shop <onboarding@resend.dev>",
 
-        "html":
-          html
-      }
+      "to":
+        ["doorlockofficial1@gmail.com"],
 
-      resend.Emails.send(params)
+      "subject": f"Order #{order_id}",
 
-      print("EMAIL SENT SUCCESS")
+      "html":
+        html
+    }
+
+    resend.Emails.send(params)
+
+    print("EMAIL SENT SUCCESS")
 
   except Exception as e:
 
