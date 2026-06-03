@@ -1,35 +1,85 @@
 import resend
 
-resend.api_key = "re_8jd3HPPn_67BihZjCwjY2PGLD8Vjrydso"
+resend.api_key = "ТВОЙ_RESEND_API_KEY"
 
 
 def send_order_email(
-  to_email: str,
-  order_id: int
+  user_email,
+  order_id,
+  address,
+  phone,
+  products,
+  total
 ):
 
   try:
 
-    params = {
+      html = f"""
+      <h1>DoorLock Shop</h1>
 
-      "from":
-        "DoorLock Shop <onboarding@resend.dev>",
+      <h2>New Order #{order_id}</h2>
 
-      "to": ["lord.kam.2006@gmail.com"],
+      <p><b>Customer Email:</b> {user_email}</p>
 
-      "subject":
-        "DoorLock Shop Order",
+      <p><b>Phone:</b> {phone}</p>
 
-      "html": f"""
-        <h1>Thank you for your order!</h1>
+      <p><b>Address:</b> {address}</p>
 
-        <p>Order ID: {order_id}</p>
+      <hr>
+
+      <h2>Products</h2>
       """
-    }
 
-    resend.Emails.send(params)
+      for product in products:
 
-    print("EMAIL SENT SUCCESS")
+        html += f"""
+        <div style="margin-bottom:20px">
+
+          <img
+            src="{product['image_url']}"
+            width="150"
+          >
+
+          <p>
+            <b>{product['name']}</b>
+          </p>
+
+          <p>
+            Quantity: {product['quantity']}
+          </p>
+
+          <p>
+            Price: {product['price']} ₽
+          </p>
+
+        </div>
+        """
+
+      html += f"""
+      <hr>
+
+      <h2>Total: {total} ₽</h2>
+      """
+
+      params = {
+
+        "from":
+          "DoorLock Shop <onboarding@resend.dev>",
+
+        "to":
+          ["doorlockofficial1@gmail.com"],
+
+        "subject":
+          f"New Order #{order_id}",
+
+        "html":
+          html
+      }
+
+      resend.Emails.send(params)
+
+      print("EMAIL SENT SUCCESS")
 
   except Exception as e:
+
     print("EMAIL ERROR:", e)

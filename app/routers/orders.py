@@ -66,11 +66,26 @@ def create_order(
 
   db.commit()
 
+  products = []
+
+  for item in cart_items:
+
+    products.append({
+      "name": item.product.name,
+      "price": item.product.price,
+      "quantity": item.quantity,
+      "image_url": item.product.image_url
+    })
+
   threading.Thread(
     target=send_order_email,
     args=(
       current_user.email,
-      order.id
+      order.id,
+      address,
+      phone,
+      products,
+      total
     )
   ).start()
 
