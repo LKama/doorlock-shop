@@ -45,11 +45,11 @@ def send_order_email(
         </p>
 
         <p>
-          Quantity: {product['quantity']}
+          Количество: {product['quantity']}
         </p>
 
         <p>
-          Price: {product['price']} ₽
+          Цена: {product['price']} ₽
         </p>
 
       </div>
@@ -58,7 +58,7 @@ def send_order_email(
     html += f"""
     <hr>
 
-    <h2>Total: {total} ₽</h2>
+    <h2>Итого: {total} ₽</h2>
     """
 
     params = {
