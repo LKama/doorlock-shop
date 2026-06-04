@@ -19,32 +19,6 @@ href="/static/css/admin.css">
 
 </a>
 
-<td>
-
-<a href="/admin/products/{{product.id}}/edit">
-
-Редактировать
-
-</a>
-
-</td>
-
-<td>
-
-<form
-action="/admin/products/{{product.id}}/delete"
-method="post">
-
-<button class="delete-btn">
-
-Удалить
-
-</button>
-
-</form>
-
-</td>
-
 <table>
 
 <tr>
@@ -59,15 +33,41 @@ method="post">
 
 <tr>
 
-<td>{{ product.id }}</td>
+  <td>{{ product.id }}</td>
 
-<td>{{ product.name }}</td>
+  <td>{{ product.name }}</td>
 
-<td>{{ product.price }} ₽</td>
+  <td>{{ product.price }} ₽</td>
 
-<td>{{ product.category }}</td>
+  <td>{{ product.category }}</td>
 
-<td>{{ product.stock }}</td>
+  <td>{{ product.stock }}</td>
+
+  <td>
+
+    <a href="/admin/products/{{product.id}}/edit">
+
+      Редактировать
+
+    </a>
+
+  </td>
+
+  <td>
+
+    <form
+      action="/admin/products/{{product.id}}/delete"
+      method="post">
+
+      <button class="delete-btn">
+
+        Удалить
+
+      </button>
+
+    </form>
+
+  </td>
 
 </tr>
 
