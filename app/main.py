@@ -1,13 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from sqladmin import Admin
 from app.database import engine
-
-from app.admin import (
-  UserAdmin,
-  ProductAdmin,
-  OrderAdmin
-)
 
 from app.database import Base, engine
 
