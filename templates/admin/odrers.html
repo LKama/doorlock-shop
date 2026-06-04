@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Заказы</title>
+<link rel="stylesheet"
+href="/static/css/admin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛒 Заказы</h1>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Сумма</th>
+<th>Статус</th>
+<th>Телефон</th>
+</tr>
+
+{% for order in orders %}
+
+<tr>
+
+<td>{{ order.id }}</td>
+
+<td>{{ order.total_price }} ₽</td>
+
+<td>
+
+<form
+action="/admin/orders/{{order.id}}/status"
+method="post">
+
+<select name="status">
+
+<option value="pending">
+Создан
+</option>
+
+<option value="processing">
+Обрабатывается
+</option>
+
+<option value="shipped">
+Отправлен
+</option>
+
+<option value="delivered">
+Доставлен
+</option>
+
+<option value="cancelled">
+Отменён
+</option>
+
+</select>
+
+<button>
+Сохранить
+</button>
+
+</form>
+
+</td>
+
+<td>{{ order.phone }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>DoorLock Admin</title>
+
+<link rel="stylesheet"
+href="/static/css/admin.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔐 DoorLock Shop Admin</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2>{{ products_count }}</h2>
+<p>Товаров</p>
+</div>
+
+<div class="card">
+<h2>{{ orders_count }}</h2>
+<p>Заказов</p>
+</div>
+
+<div class="card">
+<h2>{{ users_count }}</h2>
+<p>Пользователей</p>
+</div>
+
+</div>
+
+<div class="menu">
+
+<a href="/admin/products">
+Товары
+</a>
+
+<a href="/admin/orders">
+Заказы
+</a>
+
+<a href="/admin/users">
+Пользователи
+</a>
+
+</div>
+
+<h2>Последние заказы</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Сумма</th>
+<th>Статус</th>
+</tr>
+
+{% for order in recent_orders %}
+
+<tr>
+<td>{{ order.id }}</td>
+<td>{{ order.total_price }} ₽</td>
+<td>{{ order.status }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

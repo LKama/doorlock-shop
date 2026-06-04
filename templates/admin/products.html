@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Товары</title>
+<link rel="stylesheet"
+href="/static/css/admin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📦 Товары</h1>
+
+<a class="add-btn"
+  href="/admin/products/new">
+
+  Добавить товар
+
+</a>
+
+<td>
+
+<a href="/admin/products/{{product.id}}/edit">
+
+Редактировать
+
+</a>
+
+</td>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Название</th>
+<th>Цена</th>
+<th>Категория</th>
+<th>Остаток</th>
+</tr>
+
+{% for product in products %}
+
+<tr>
+
+<td>{{ product.id }}</td>
+
+<td>{{ product.name }}</td>
+
+<td>{{ product.price }} ₽</td>
+
+<td>{{ product.category }}</td>
+
+<td>{{ product.stock }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

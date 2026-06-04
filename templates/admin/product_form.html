@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Добавить товар</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>➕ Добавить товар</h1>
+
+<form
+    action="/admin/products/create"
+    method="post"
+    enctype="multipart/form-data">
+
+    <input name="name" placeholder="Название">
+
+    <textarea
+        name="description"
+        placeholder="Описание"></textarea>
+
+    <input
+        name="price"
+        type="number"
+        placeholder="Цена">
+
+    <input
+        name="category"
+        placeholder="Категория">
+
+    <input
+        name="stock"
+        type="number"
+        placeholder="Количество">
+
+    <input
+        type="file"
+        name="image">
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,11 +1,12 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from sqladmin import Admin
 from app.database import engine
 
 from app.admin import (
-    UserAdmin,
-    ProductAdmin,
-    OrderAdmin
+  UserAdmin,
+  ProductAdmin,
+  OrderAdmin
 )
 
 from app.database import Base, engine
@@ -20,17 +21,23 @@ from app.routers.auth import router as auth_router
 from app.routers.products import router as products_router
 from app.routers.cart import router as cart_router
 from app.routers.orders import router as orders_router
+from app.routers.admin import router as admin_router
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DoorLock Shop API")
 
-admin = Admin(app, engine)
+app.mount(
+  "/static",
+  StaticFiles(directory="static"),
+  name="static"
+)
 
-
-admin.add_view(UserAdmin)
-admin.add_view(ProductAdmin)
-admin.add_view(OrderAdmin)
+app.include_router(auth_router)
+app.include_router(products_router)
+app.include_router(cart_router)
+app.include_router(orders_router)
+app.include_router(admin_router)
 
 app.include_router(auth_router)
 app.include_router(products_router)
