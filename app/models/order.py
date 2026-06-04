@@ -17,7 +17,6 @@ class Order(Base):
   id = Column(Integer, primary_key=True)
   user_id = Column(Integer, ForeignKey("users.id"))
   total_price = Column(Float)
-  status = Column(String, default="created")
   address = Column(String)
   phone = Column(String)
   created_at = Column(
