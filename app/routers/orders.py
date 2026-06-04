@@ -44,7 +44,8 @@ def create_order(
     user_id=current_user.id,
     total_price=total,
     address=address,
-    phone=phone
+    phone=phone,
+    status="pending"
   )
 
   db.add(order)

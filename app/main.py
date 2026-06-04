@@ -1,4 +1,12 @@
 from fastapi import FastAPI
+from sqladmin import Admin
+from app.database import engine
+
+from app.admin import (
+    UserAdmin,
+    ProductAdmin,
+    OrderAdmin
+)
 
 from app.database import Base, engine
 
@@ -16,6 +24,13 @@ from app.routers.orders import router as orders_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DoorLock Shop API")
+
+admin = Admin(app, engine)
+
+
+admin.add_view(UserAdmin)
+admin.add_view(ProductAdmin)
+admin.add_view(OrderAdmin)
 
 app.include_router(auth_router)
 app.include_router(products_router)
