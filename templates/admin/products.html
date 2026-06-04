@@ -2,80 +2,44 @@
 <html>
 <head>
 <title>Товары</title>
-<link rel="stylesheet"
-href="/static/css/admin.css">
+<link rel="stylesheet" href="/static/css/admin.css">
 </head>
 
 <body>
-
 <div class="container">
-
-<h1>📦 Товары</h1>
-
-<a class="add-btn"
-  href="/admin/products/new">
-
-  Добавить товар
-
-</a>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Название</th>
-<th>Цена</th>
-<th>Категория</th>
-<th>Остаток</th>
-</tr>
-
-{% for product in products %}
-
-<tr>
-
-  <td>{{ product.id }}</td>
-
-  <td>{{ product.name }}</td>
-
-  <td>{{ product.price }} ₽</td>
-
-  <td>{{ product.category }}</td>
-
-  <td>{{ product.stock }}</td>
-
-  <td>
-
-    <a href="/admin/products/{{product.id}}/edit">
-
-      Редактировать
-
-    </a>
-
-  </td>
-
-  <td>
-
-    <form
-      action="/admin/products/{{product.id}}/delete"
-      method="post">
-
-      <button class="delete-btn">
-
-        Удалить
-
-      </button>
-
-    </form>
-
-  </td>
-
-</tr>
-
-{% endfor %}
-
-</table>
-
+    <h1>📦 Товары</h1>
+    
+    <a class="add-btn" href="/admin/products/new">Добавить товар</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Категория</th>
+                <th>Остаток</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }} ₽</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="/admin/products/{{ product.id }}/edit">Редактировать</a>
+                    <form action="/admin/products/{{ product.id }}/delete" method="post" style="display: inline;">
+                        <button class="delete-btn" type="submit">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
 </body>
 </html>
