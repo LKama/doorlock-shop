@@ -36,147 +36,57 @@
 
 <td>
 
-{% if order.status == "pending" %}
-<span class="status pending">
-🟡 Новый
+<span class="status {{ order.status }}">
+{{ order.status }}
 </span>
-{% endif %}
-
-{% if order.status == "processing" %}
-<span class="status processing">
-🔵 В обработке
-</span>
-{% endif %}
-
-{% if order.status == "shipped" %}
-<span class="status shipped">
-🟣 Отправлен
-</span>
-{% endif %}
-
-{% if order.status == "delivered" %}
-<span class="status delivered">
-🟢 Доставлен
-</span>
-{% endif %}
-
-{% if order.status == "cancelled" %}
-<span class="status cancelled">
-🔴 Отменён
-</span>
-{% endif %}
 
 </td>
 
 <td>
 
-<td>
-
-<div class="status-buttons">
-
 <form
 action="/admin/orders/{{ order.id }}/status"
 method="post"
+class="status-form"
 >
 
-<input
-type="hidden"
+<select
 name="status"
-value="pending"
+class="status-select"
 >
 
-<button
-class="status-btn pending-btn"
-type="submit"
->
+<option value="pending"
+{% if order.status == "pending" %}selected{% endif %}>
 🟡 Новый
-</button>
+</option>
 
-</form>
-
-<form
-action="/admin/orders/{{ order.id }}/status"
-method="post"
->
-
-<input
-type="hidden"
-name="status"
-value="processing"
->
-
-<button
-class="status-btn processing-btn"
-type="submit"
->
+<option value="processing"
+{% if order.status == "processing" %}selected{% endif %}>
 🔵 В обработке
-</button>
+</option>
 
-</form>
-
-<form
-action="/admin/orders/{{ order.id }}/status"
-method="post"
->
-
-<input
-type="hidden"
-name="status"
-value="shipped"
->
-
-<button
-class="status-btn shipped-btn"
-type="submit"
->
+<option value="shipped"
+{% if order.status == "shipped" %}selected{% endif %}>
 🟣 Отправлен
-</button>
+</option>
 
-</form>
-
-<form
-action="/admin/orders/{{ order.id }}/status"
-method="post"
->
-
-<input
-type="hidden"
-name="status"
-value="delivered"
->
-
-<button
-class="status-btn delivered-btn"
-type="submit"
->
+<option value="delivered"
+{% if order.status == "delivered" %}selected{% endif %}>
 🟢 Доставлен
-</button>
+</option>
 
-</form>
-
-<form
-action="/admin/orders/{{ order.id }}/status"
-method="post"
->
-
-<input
-type="hidden"
-name="status"
-value="cancelled"
->
-
-<button
-class="status-btn cancelled-btn"
-type="submit"
->
+<option value="cancelled"
+{% if order.status == "cancelled" %}selected{% endif %}>
 🔴 Отменён
+</option>
+
+</select>
+
+<button class="btn btn-gold">
+💾
 </button>
 
 </form>
-
-</div>
-
-</td>
 
 </td>
 
