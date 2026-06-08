@@ -1,45 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Товары</title>
-<link rel="stylesheet" href="/static/css/admin.css">
-</head>
+{% extends "admin/base.html" %}
 
-<body>
-<div class="container">
-    <h1>📦 Товары</h1>
-    
-    <a class="add-btn" href="/admin/products/new">Добавить товар</a>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Цена</th>
-                <th>Категория</th>
-                <th>Остаток</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }} ₽</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.stock }}</td>
-                <td>
-                    <a href="/admin/products/{{ product.id }}/edit">Редактировать</a>
-                    <form action="/admin/products/{{ product.id }}/delete" method="post" style="display: inline;">
-                        <button class="delete-btn" type="submit">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block content %}
+
+<h1 class="page-title">
+    📦 Товары
+</h1>
+
+<a
+    href="/admin/products/new"
+    class="btn btn-gold"
+>
+    ➕ Добавить товар
+</a>
+
+<br><br>
+
+<div class="product-grid">
+
+{% for product in products %}
+
+<div class="product-card">
+
+    <img
+        src="{{ product.image_url }}"
+        alt=""
+    >
+
+    <div class="product-body">
+
+        <div class="product-name">
+            {{ product.name }}
+        </div>
+
+        <div class="product-price">
+            {{ product.price }} ₽
+        </div>
+
+        <div class="product-category">
+            {{ product.category }}
+        </div>
+
+        <div class="product-category">
+            Остаток:
+            {{ product.stock }}
+        </div>
+
+        <div class="actions">
+
+            <a
+                href="/admin/products/{{ product.id }}/edit"
+                class="btn btn-gold"
+            >
+                Изменить
+            </a>
+
+            <form
+                action="/admin/products/{{ product.id }}/delete"
+                method="post"
+            >
+                <button
+                    class="btn btn-red"
+                >
+                    Удалить
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
 </div>
-</body>
-</html>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

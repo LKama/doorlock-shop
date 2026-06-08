@@ -1,78 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin/base.html" %}
 
-<title>DoorLock Admin</title>
+{% block content %}
 
-<link rel="stylesheet"
-href="/static/css/admin.css">
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🔐 DoorLock Shop Admin</h1>
+<h1 class="page-title">
+    📊 Dashboard
+</h1>
 
 <div class="cards">
 
+    <div class="card">
+        <div class="card-number">
+            {{ users_count }}
+        </div>
+
+        <div class="card-title">
+            Пользователей
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-number">
+            {{ products_count }}
+        </div>
+
+        <div class="card-title">
+            Товаров
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-number">
+            {{ orders_count }}
+        </div>
+
+        <div class="card-title">
+            Заказов
+        </div>
+    </div>
+
+</div>
+
 <div class="card">
-<h2>{{ products_count }}</h2>
-<p>Товаров</p>
-</div>
 
-<div class="card">
-<h2>{{ orders_count }}</h2>
-<p>Заказов</p>
-</div>
+    <h2 style="margin-bottom:20px;">
+        Последние заказы
+    </h2>
 
-<div class="card">
-<h2>{{ users_count }}</h2>
-<p>Пользователей</p>
-</div>
+    <table class="table">
 
-</div>
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Статус</th>
+        </tr>
 
-<div class="menu">
+        {% for order in recent_orders %}
+        <tr>
 
-<a href="/admin/products">
-Товары
-</a>
+            <td>#{{ order.id }}</td>
 
-<a href="/admin/orders">
-Заказы
-</a>
+            <td>
+                {{ order.total_price }} ₽
+            </td>
 
-<a href="/admin/users">
-Пользователи
-</a>
+            <td>
+                {{ order.status }}
+            </td>
 
-</div>
+        </tr>
+        {% endfor %}
 
-<h2>Последние заказы</h2>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Сумма</th>
-<th>Статус</th>
-</tr>
-
-{% for order in recent_orders %}
-
-<tr>
-<td>{{ order.id }}</td>
-<td>{{ order.total_price }} ₽</td>
-<td>{{ order.status }}</td>
-</tr>
-
-{% endfor %}
-
-</table>
+    </table>
 
 </div>
 
-</body>
-</html>
+{% endblock %}

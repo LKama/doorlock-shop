@@ -1,53 +1,121 @@
-<!DOCTYPE html>
-<html>
+{% extends "admin/base.html" %}
 
-<head>
-    <title>Добавить товар</title>
-    <link rel="stylesheet" href="/static/css/admin.css">
-</head>
+{% block content %}
 
-<body>
+<h1 class="page-title">
+    ➕ Новый товар
+</h1>
 
-<div class="container">
-
-<h1>➕ Добавить товар</h1>
+<div class="card">
 
 <form
     action="/admin/products/create"
     method="post"
-    enctype="multipart/form-data">
+    enctype="multipart/form-data"
+>
 
-    <input name="name" placeholder="Название">
+<div class="form-group">
+
+    <label>
+        Название
+    </label>
+
+    <input
+        type="text"
+        name="name"
+        required
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        Описание
+    </label>
 
     <textarea
         name="description"
-        placeholder="Описание"></textarea>
+        rows="5"
+        required
+    ></textarea>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        Цена
+    </label>
 
     <input
+        type="number"
         name="price"
+        required
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        Категория
+    </label>
+
+    <select name="category">
+
+        <option>
+            Умный замок
+        </option>
+
+        <option>
+            Врезной
+        </option>
+
+        <option>
+            Накладной
+        </option>
+
+    </select>
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        Остаток
+    </label>
+
+    <input
         type="number"
-        placeholder="Цена">
-
-    <input
-        name="category"
-        placeholder="Категория">
-
-    <input
         name="stock"
-        type="number"
-        placeholder="Количество">
+        required
+    >
+
+</div>
+
+<div class="form-group">
+
+    <label>
+        Фото
+    </label>
 
     <input
         type="file"
-        name="image">
+        name="image"
+        required
+    >
 
-    <button type="submit">
-        Сохранить
-    </button>
+</div>
+
+<button
+    class="btn btn-green"
+>
+    Сохранить
+</button>
 
 </form>
 
 </div>
 
-</body>
-</html>
+{% endblock %}

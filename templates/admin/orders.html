@@ -1,73 +1,87 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Заказы</title>
-<link rel="stylesheet"
-href="/static/css/admin.css">
-</head>
+{% extends "admin/base.html" %}
 
-<body>
+{% block content %}
 
-<div class="container">
+<h1 class="page-title">
+    🛒 Заказы
+</h1>
 
-<h1>🛒 Заказы</h1>
+<div class="card">
 
-<table>
+<table class="table">
 
 <tr>
 <th>ID</th>
 <th>Сумма</th>
-<th>Статус</th>
 <th>Телефон</th>
+<th>Статус</th>
+<th>Изменить</th>
 </tr>
 
 {% for order in orders %}
 
 <tr>
 
-<td>{{ order.id }}</td>
+<td>
+#{{ order.id }}
+</td>
 
-<td>{{ order.total_price }} ₽</td>
+<td>
+{{ order.total_price }} ₽
+</td>
+
+<td>
+{{ order.phone }}
+</td>
+
+<td>
+
+<span class="status {{ order.status }}">
+{{ order.status }}
+</span>
+
+</td>
 
 <td>
 
 <form
-action="/admin/orders/{{order.id}}/status"
-method="post">
+action="/admin/orders/{{ order.id }}/status"
+method="post"
+>
 
 <select name="status">
 
 <option value="pending">
-Создан
+pending
 </option>
 
 <option value="processing">
-Обрабатывается
+processing
 </option>
 
 <option value="shipped">
-Отправлен
+shipped
 </option>
 
 <option value="delivered">
-Доставлен
+delivered
 </option>
 
 <option value="cancelled">
-Отменён
+cancelled
 </option>
 
 </select>
 
-<button>
-Сохранить
+<button
+class="btn btn-gold"
+>
+Обновить
 </button>
 
 </form>
 
 </td>
-
-<td>{{ order.phone }}</td>
 
 </tr>
 
@@ -77,5 +91,4 @@ method="post">
 
 </div>
 
-</body>
-</html>
+{% endblock %}

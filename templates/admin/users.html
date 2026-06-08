@@ -1,34 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Пользователи</title>
-<link rel="stylesheet"
-href="/static/css/admin.css">
-</head>
+{% extends "admin/base.html" %}
 
-<body>
+{% block content %}
 
-<div class="container">
+<h1 class="page-title">
+    👥 Пользователи
+</h1>
 
-<h1>👤 Пользователи</h1>
+<div class="card">
 
-<table>
+<table class="table">
 
 <tr>
 <th>ID</th>
 <th>Имя</th>
 <th>Email</th>
+<th>Дата регистрации</th>
 </tr>
 
 {% for user in users %}
 
 <tr>
 
-<td>{{ user.id }}</td>
+<td>
+{{ user.id }}
+</td>
 
-<td>{{ user.name }}</td>
+<td>
+{{ user.name }}
+</td>
 
-<td>{{ user.email }}</td>
+<td>
+{{ user.email }}
+</td>
+
+<td>
+{{ user.created_at }}
+</td>
 
 </tr>
 
@@ -38,5 +45,4 @@ href="/static/css/admin.css">
 
 </div>
 
-</body>
-</html>
+{% endblock %}

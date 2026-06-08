@@ -1,0 +1,95 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<h1 class="page-title">
+    ✏️ Редактирование товара
+</h1>
+
+<div class="card">
+
+<form
+    action="/admin/products/{{ product.id }}/edit"
+    method="post"
+>
+
+<div class="form-group">
+
+<label>
+Название
+</label>
+
+<input
+    type="text"
+    name="name"
+    value="{{ product.name }}"
+>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Описание
+</label>
+
+<textarea
+    name="description"
+    rows="6"
+>{{ product.description }}</textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Цена
+</label>
+
+<input
+    type="number"
+    name="price"
+    value="{{ product.price }}"
+>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Категория
+</label>
+
+<input
+    type="text"
+    name="category"
+    value="{{ product.category }}"
+>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Остаток
+</label>
+
+<input
+    type="number"
+    name="stock"
+    value="{{ product.stock }}"
+>
+
+</div>
+
+<button
+    class="btn btn-green"
+>
+    Сохранить изменения
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

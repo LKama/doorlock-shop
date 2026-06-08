@@ -5,6 +5,12 @@ from sqlalchemy import (
   ForeignKey
 )
 
+from sqlalchemy.orm import relationship
+
+product = relationship(
+  "Product"
+)
+
 from app.database import Base
 
 class OrderItem(Base):

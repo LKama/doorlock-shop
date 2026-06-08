@@ -7,6 +7,13 @@ from sqlalchemy import (
   DateTime
 )
 
+from sqlalchemy.orm import relationship
+
+items = relationship(
+  "OrderItem",
+  backref="order"
+)
+
 from datetime import datetime
 
 from app.database import Base
