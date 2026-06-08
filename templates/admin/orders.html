@@ -36,9 +36,35 @@
 
 <td>
 
-<span class="status {{ order.status }}">
-{{ order.status }}
+{% if order.status == "pending" %}
+<span class="status pending">
+🟡 Новый
 </span>
+{% endif %}
+
+{% if order.status == "processing" %}
+<span class="status processing">
+🔵 В обработке
+</span>
+{% endif %}
+
+{% if order.status == "shipped" %}
+<span class="status shipped">
+🟣 Отправлен
+</span>
+{% endif %}
+
+{% if order.status == "delivered" %}
+<span class="status delivered">
+🟢 Доставлен
+</span>
+{% endif %}
+
+{% if order.status == "cancelled" %}
+<span class="status cancelled">
+🔴 Отменён
+</span>
+{% endif %}
 
 </td>
 
