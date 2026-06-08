@@ -36,50 +36,147 @@
 
 <td>
 
-<span class="status {{ order.status }}">
-{{ order.status }}
+{% if order.status == "pending" %}
+<span class="status pending">
+🟡 Новый
 </span>
+{% endif %}
+
+{% if order.status == "processing" %}
+<span class="status processing">
+🔵 В обработке
+</span>
+{% endif %}
+
+{% if order.status == "shipped" %}
+<span class="status shipped">
+🟣 Отправлен
+</span>
+{% endif %}
+
+{% if order.status == "delivered" %}
+<span class="status delivered">
+🟢 Доставлен
+</span>
+{% endif %}
+
+{% if order.status == "cancelled" %}
+<span class="status cancelled">
+🔴 Отменён
+</span>
+{% endif %}
 
 </td>
 
 <td>
+
+<td>
+
+<div class="status-buttons">
 
 <form
 action="/admin/orders/{{ order.id }}/status"
 method="post"
 >
 
-<select name="status">
-
-<option value="pending">
-pending
-</option>
-
-<option value="processing">
-processing
-</option>
-
-<option value="shipped">
-shipped
-</option>
-
-<option value="delivered">
-delivered
-</option>
-
-<option value="cancelled">
-cancelled
-</option>
-
-</select>
+<input
+type="hidden"
+name="status"
+value="pending"
+>
 
 <button
-class="btn btn-gold"
+class="status-btn pending-btn"
+type="submit"
 >
-Обновить
+🟡
 </button>
 
 </form>
+
+<form
+action="/admin/orders/{{ order.id }}/status"
+method="post"
+>
+
+<input
+type="hidden"
+name="status"
+value="processing"
+>
+
+<button
+class="status-btn processing-btn"
+type="submit"
+>
+🔵
+</button>
+
+</form>
+
+<form
+action="/admin/orders/{{ order.id }}/status"
+method="post"
+>
+
+<input
+type="hidden"
+name="status"
+value="shipped"
+>
+
+<button
+class="status-btn shipped-btn"
+type="submit"
+>
+🟣
+</button>
+
+</form>
+
+<form
+action="/admin/orders/{{ order.id }}/status"
+method="post"
+>
+
+<input
+type="hidden"
+name="status"
+value="delivered"
+>
+
+<button
+class="status-btn delivered-btn"
+type="submit"
+>
+🟢
+</button>
+
+</form>
+
+<form
+action="/admin/orders/{{ order.id }}/status"
+method="post"
+>
+
+<input
+type="hidden"
+name="status"
+value="cancelled"
+>
+
+<button
+class="status-btn cancelled-btn"
+type="submit"
+>
+🔴
+</button>
+
+</form>
+
+</div>
+
+</td>
 
 </td>
 
