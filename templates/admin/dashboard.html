@@ -59,12 +59,38 @@
 
             <td>#{{ order.id }}</td>
 
-            <td>
-                {{ order.total_price }} ₽
-            </td>
+            <td>{{ order.total_price }} ₽</td>
 
             <td>
-                {{ order.status }}
+                {% if order.status == "pending" %}
+                <span class="status pending">
+                🟡 Новый
+                </span>
+                {% endif %}
+
+                {% if order.status == "processing" %}
+                <span class="status processing">
+                🔵 В обработке
+                </span>
+                {% endif %}
+
+                {% if order.status == "shipped" %}
+                <span class="status shipped">
+                🟣 Отправлен
+                </span>
+                {% endif %}
+
+                {% if order.status == "delivered" %}
+                <span class="status delivered">
+                🟢 Доставлен
+                </span>
+                {% endif %}
+
+                {% if order.status == "cancelled" %}
+                <span class="status cancelled">
+                🔴 Отменён
+                </span>
+                {% endif %}
             </td>
 
         </tr>
