@@ -80,3 +80,7 @@ def toggle_favorite(
     return {
         "message": "added"
     }
+
+@router.get("/test")
+def test():
+    return {"ok": True}
