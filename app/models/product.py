@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, Text
 from app.database import Base
 
 class Product(Base):
@@ -17,3 +17,5 @@ class Product(Base):
   image_url = Column(String, nullable=False)
 
   stock = Column(Integer, default=0)
+
+  specifications = Column(Text, nullable=True)
