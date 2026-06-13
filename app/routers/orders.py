@@ -8,6 +8,7 @@ from app.database import get_db
 from app.models.cart_item import CartItem
 from app.models.order import Order
 from app.models.order_item import OrderItem
+from app.models.product import Product
 
 from app.utils.dependencies import get_current_user
 from app.utils.email import send_order_email
@@ -104,3 +105,87 @@ def get_orders(
   return db.query(Order).filter(
     Order.user_id == current_user.id
   ).all()
+
+@router.get("/{order_id}")
+def get_order_details(
+  order_id: int,
+  current_user=Depends(get_current_user),
+  db: Session = Depends(get_db)
+):
+
+  order = db.query(Order).filter(
+    Order.id == order_id,
+    Order.user_id == current_user.id
+  ).first()
+
+  if not order:
+    raise HTTPException(
+      status_code=404,
+      detail="Order not found"
+    )
+
+  items = []
+
+  order_items = db.query(OrderItem).filter(
+    OrderItem.order_id == order.id
+  ).all()
+
+  for item in order_items:
+
+    product = db.query(Product).filter(
+      Product.id == item.product_id
+    ).first()
+
+    items.append({
+      "id": item.id,
+      "quantity": item.quantity,
+      "price": item.price_at_moment,
+      "product": {
+        "id": product.id,
+        "name": product.name,
+        "image_url": product.image_url,
+        "category": product.category,
+      }
+    })
+
+  return {
+    "id": order.id,
+    "status": order.status,
+    "total_price": order.total_price,
+    "address": order.address,
+    "phone": order.phone,
+    "created_at": order.created_at,
+    "items": items
+  }
+
+@router.post("/{order_id}/cancel")
+def cancel_order(
+  order_id: int,
+  current_user=Depends(get_current_user),
+  db: Session = Depends(get_db)
+):
+
+  order = db.query(Order).filter(
+    Order.id == order_id,
+    Order.user_id == current_user.id
+  ).first()
+
+  if not order:
+    raise HTTPException(
+      status_code=404,
+      detail="Order not found"
+    )
+
+  if order.status != "pending":
+    raise HTTPException(
+      status_code=400,
+      detail="Order already processing"
+    )
+
+  order.status = "cancelled"
+
+  db.commit()
+
+  return {
+    "message": "Order cancelled"
+  }
