@@ -3,53 +3,99 @@
 {% block content %}
 
 <h1 class="page-title">
-    👥 Пользователи
+    Пользователи
 </h1>
 
-<div class="card">
+<div class="users-grid">
 
-<table class="table">
+    {% for user in users %}
 
-<tr>
-<th>ID</th>
-<th>Имя</th>
-<th>Email</th>
-<th>Дата регистрации</th>
-</tr>
+    <a href="/admin/chat/{{ user.id }}" class="user-card">
 
-{% for user in users %}
+        <div class="avatar">
+            {{ user.name[0].upper() }}
+        </div>
 
-<tr>
+        <div class="info">
 
-<td>
-{{ user.id }}
-</td>
+            <div class="name">
+                {{ user.name }}
+            </div>
 
-<td>
-{{ user.name }}
-</td>
+            <div class="email">
+                {{ user.email }}
+            </div>
 
-<td>
-{{ user.email }}
-</td>
+        </div>
 
-<td>
-{{ user.created_at }}
-</td>
+        <div class="arrow">
+            →
+        </div>
 
-<td>
-    <a href="/admin/chat/{{ user.id }}"
-       class="btn btn-primary">
-        Чат
     </a>
-</td>
 
-</tr>
-
-{% endfor %}
-
-</table>
+    {% endfor %}
 
 </div>
+
+<style>
+
+.users-grid{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.user-card{
+    background:#1B1E22;
+    border-radius:16px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    text-decoration:none;
+    color:white;
+    transition:.2s;
+}
+
+.user-card:hover{
+    transform:translateY(-2px);
+    background:#23272d;
+}
+
+.avatar{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#D4A056;
+    color:black;
+    font-size:22px;
+    font-weight:bold;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.info{
+    flex:1;
+}
+
+.name{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.email{
+    color:#888;
+    margin-top:4px;
+}
+
+.arrow{
+    font-size:24px;
+    color:#D4A056;
+}
+
+</style>
 
 {% endblock %}
