@@ -82,57 +82,67 @@
 
 </div>
 
-<h3 style="margin-top:30px">
-    Характеристики
-</h3>
+<div class="spec-card">
 
-<div id="specifications">
+    <div class="spec-header">
 
-{% if product.specifications %}
-
-    {% for key, value in product.specifications.items() %}
-
-    <div class="spec-row">
-
-        <input
-            type="text"
-            name="spec_key"
-            value="{{ key }}"
-            placeholder="Название"
-        >
-
-        <input
-            type="text"
-            name="spec_value"
-            value="{{ value }}"
-            placeholder="Значение"
-        >
+        <h3>
+            Характеристики товара
+        </h3>
 
         <button
             type="button"
-            class="remove-btn"
-            onclick="removeSpec(this)"
+            class="add-spec-btn"
+            onclick="addSpec()"
         >
-            ✕
+            + Добавить
         </button>
 
     </div>
 
-    {% endfor %}
+    <div id="specifications">
 
-{% endif %}
+        {% if product.specifications %}
+
+            {% for key, value in product.specifications.items() %}
+
+            <div class="spec-item">
+
+                <div class="drag">
+                    ☰
+                </div>
+
+                <input
+                    type="text"
+                    name="spec_key"
+                    value="{{ key }}"
+                    placeholder="Название"
+                >
+
+                <input
+                    type="text"
+                    name="spec_value"
+                    value="{{ value }}"
+                    placeholder="Значение"
+                >
+
+                <button
+                    type="button"
+                    class="delete-spec"
+                    onclick="removeSpec(this)"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
 
 </div>
-
-<button
-    type="button"
-    class="btn btn-blue"
-    onclick="addSpec()"
->
-    + Добавить характеристику
-</button>
-
-<br><br>
 
 <button
     class="btn btn-green"
@@ -148,67 +158,174 @@
 
 function addSpec() {
 
-    const container =
-        document.getElementById(
-            "specifications"
-        );
+    document
+        .getElementById("specifications")
+        .insertAdjacentHTML(
+            "beforeend",
 
-    container.insertAdjacentHTML(
-        "beforeend",
-        `
-        <div class="spec-row">
+`
+<div class="spec-item">
 
-            <input
-                type="text"
-                name="spec_key"
-                placeholder="Название"
-            >
+    <div class="drag">
+        ☰
+    </div>
 
-            <input
-                type="text"
-                name="spec_value"
-                placeholder="Значение"
-            >
+    <input
+        type="text"
+        name="spec_key"
+        placeholder="Название"
+    >
 
-            <button
-                type="button"
-                class="remove-btn"
-                onclick="removeSpec(this)"
-            >
-                ✕
-            </button>
+    <input
+        type="text"
+        name="spec_value"
+        placeholder="Значение"
+    >
 
-        </div>
-        `
+    <button
+        type="button"
+        class="delete-spec"
+        onclick="removeSpec(this)"
+    >
+        ✕
+    </button>
+
+</div>
+`
     );
 }
 
-function removeSpec(btn) {
-    btn.parentElement.remove();
+function removeSpec(button) {
+    button.closest(".spec-item").remove();
 }
 
 </script>
+
 {% endblock %}
 
 <style>
 
-.spec-row{
+.spec-card{
+
+    margin-top:30px;
+
+    background:#1B1E22;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    border:1px solid #2c3138;
+}
+
+.spec-header{
+
     display:flex;
-    gap:10px;
-    margin-bottom:10px;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
 }
 
-.spec-row input{
-    flex:1;
-}
+.spec-header h3{
 
-.remove-btn{
-    background:#ff4444;
-    border:none;
+    margin:0;
+
     color:white;
-    width:40px;
-    border-radius:8px;
+}
+
+.add-spec-btn{
+
+    background:#D4A056;
+
+    color:black;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 18px;
+
     cursor:pointer;
+
+    font-weight:bold;
+}
+
+.add-spec-btn:hover{
+
+    opacity:.9;
+}
+
+.spec-item{
+
+    display:grid;
+
+    grid-template-columns:
+        40px
+        1fr
+        1fr
+        50px;
+
+    gap:12px;
+
+    align-items:center;
+
+    margin-bottom:12px;
+}
+
+.drag{
+
+    text-align:center;
+
+    font-size:22px;
+
+    color:#777;
+
+    cursor:grab;
+}
+
+.spec-item input{
+
+    background:#111315;
+
+    border:1px solid #2e3238;
+
+    border-radius:10px;
+
+    color:white;
+
+    padding:12px;
+}
+
+.spec-item input:focus{
+
+    outline:none;
+
+    border-color:#D4A056;
+}
+
+.delete-spec{
+
+    background:#ff4d4d;
+
+    border:none;
+
+    color:white;
+
+    border-radius:10px;
+
+    height:45px;
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+.delete-spec:hover{
+
+    background:#ff2e2e;
 }
 
 </style>
