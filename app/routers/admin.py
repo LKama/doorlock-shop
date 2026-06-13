@@ -333,7 +333,7 @@ def admin_send_message(
     msg = ChatMessage(
         user_id=user_id,
         sender="admin",
-        text=text
+        message=text
     )
 
     db.add(msg)
