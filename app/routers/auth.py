@@ -13,6 +13,11 @@ from app.utils.security import(
   create_access_token
 )
 
+from app.schemas.profile import (
+    UpdateProfileRequest,
+    ChangePasswordRequest
+)
+
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/register", operation_id="auth_register")
@@ -84,3 +89,57 @@ def get_me(
       "email": current_user.email,
       "name": current_user.name,
    }
+
+@router.put("/update-profile")
+def update_profile(
+    data: UpdateProfileRequest,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    existing = db.query(User).filter(
+        User.email == data.email,
+        User.id != current_user.id
+    ).first()
+
+    if existing:
+        raise HTTPException(
+            status_code=400,
+            detail="Email уже используется"
+        )
+
+    current_user.name = data.name
+    current_user.email = data.email
+
+    db.commit()
+
+    return {
+        "message": "Профиль обновлен"
+    }
+
+
+@router.put("/change-password")
+def change_password(
+    data: ChangePasswordRequest,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+
+    if not verify_password(
+        data.old_password,
+        current_user.password_hash
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Неверный старый пароль"
+        )
+
+    current_user.password_hash = hash_password(
+        data.new_password
+    )
+
+    db.commit()
+
+    return {
+        "message": "Пароль изменён"
+    }
