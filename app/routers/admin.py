@@ -314,8 +314,9 @@ def admin_chat(
         .all()
 
     return templates.TemplateResponse(
-        "admin/chat.html",
-        {
+        request=request,
+        name="admin/chat.html",
+        context={
             "request": request,
             "user": user,
             "messages": messages
