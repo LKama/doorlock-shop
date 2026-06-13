@@ -15,7 +15,7 @@ from app.utils.security import(
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
-@router.post("/register")
+@router.post("/register", operation_id="auth_register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
 
   exiting_user = db.query(User).filter(
@@ -39,7 +39,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
   return {"message": "User created"}
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=Token, operation_id="auth_login")
 def login(
     user: LoginRequest,
     db: Session = Depends(get_db)
