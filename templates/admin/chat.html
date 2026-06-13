@@ -37,7 +37,13 @@
                 {% endif %}
             ">
 
-                {{ msg.message }}
+                <div class="message-text">
+                    {{ msg.message }}
+                </div>
+
+                <div class="message-time">
+                    {{ msg.created_at.strftime('%H:%M') }}
+                </div>
 
             </div>
 
@@ -122,6 +128,16 @@
     padding:12px 16px;
     border-radius:16px;
     word-break:break-word;
+}
+
+.message-text {
+    margin-bottom: 4px;
+}
+
+.message-time {
+    font-size: 10px;
+    opacity: 0.7;
+    text-align: right;
 }
 
 .user{
