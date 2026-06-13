@@ -304,18 +304,14 @@ def admin_chat(
     db: Session = Depends(get_db)
 ):
 
-    user = db.query(User).get(user_id)
+    user = db.query(User).filter(
+        User.id == user_id
+    ).first()
 
-    messages = (
-        db.query(ChatMessage)
-        .filter(
-            ChatMessage.user_id == user_id
-        )
-        .order_by(
-            ChatMessage.created_at.asc()
-        )
+    messages = db.query(ChatMessage)\
+        .filter(ChatMessage.user_id == user_id)\
+        .order_by(ChatMessage.created_at.asc())\
         .all()
-    )
 
     return templates.TemplateResponse(
         "admin/chat.html",
@@ -326,21 +322,20 @@ def admin_chat(
         }
     )
 
-@router.post("/admin/chat/{user_id}")
+@router.post("/admin/chat/{user_id}/send")
 def admin_send_message(
     user_id: int,
-    message: str = Form(...),
+    text: str = Form(...),
     db: Session = Depends(get_db)
 ):
 
     msg = ChatMessage(
         user_id=user_id,
         sender="admin",
-        message=message
+        text=text
     )
 
     db.add(msg)
-
     db.commit()
 
     return RedirectResponse(
