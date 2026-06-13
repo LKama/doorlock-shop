@@ -147,19 +147,23 @@ def edit_product_page(
     request: Request,
     db: Session = Depends(get_db)
 ):
-
-    product = (
-        db.query(Product)
-        .filter(Product.id == product_id)
-        .first()
-    )
+    product = db.query(Product).filter(Product.id == product_id).first()
+    
+    # Если specifications пришла как строка — парсим в словарь
+    if product and product.specifications:
+        if isinstance(product.specifications, str):
+            try:
+                product.specifications = json.loads(product.specifications)
+            except json.JSONDecodeError:
+                product.specifications = {}
+        # если уже dict, ничего не делаем
+    else:
+        product.specifications = {}
 
     return templates.TemplateResponse(
         request=request,
         name="admin/edit_product.html",
-        context={
-            "product": product
-        }
+        context={"product": product}
     )
 
 
