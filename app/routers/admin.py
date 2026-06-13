@@ -19,6 +19,7 @@ from app.database import get_db
 from app.models.user import User
 from app.models.product import Product
 from app.models.order import Order
+from app.models.chat_message import ChatMessage
 
 router = APIRouter()
 
@@ -294,4 +295,55 @@ def admin_users(
         context={
             "users": users
         }
+    )
+
+@router.get("/admin/chat/{user_id}")
+def admin_chat(
+    user_id: int,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+
+    user = db.query(User).get(user_id)
+
+    messages = (
+        db.query(ChatMessage)
+        .filter(
+            ChatMessage.user_id == user_id
+        )
+        .order_by(
+            ChatMessage.created_at.asc()
+        )
+        .all()
+    )
+
+    return templates.TemplateResponse(
+        "admin/chat.html",
+        {
+            "request": request,
+            "user": user,
+            "messages": messages
+        }
+    )
+
+@router.post("/admin/chat/{user_id}")
+def admin_send_message(
+    user_id: int,
+    message: str = Form(...),
+    db: Session = Depends(get_db)
+):
+
+    msg = ChatMessage(
+        user_id=user_id,
+        sender="admin",
+        message=message
+    )
+
+    db.add(msg)
+
+    db.commit()
+
+    return RedirectResponse(
+        f"/admin/chat/{user_id}",
+        status_code=303
     )
