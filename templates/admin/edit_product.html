@@ -82,6 +82,58 @@
 
 </div>
 
+<h3 style="margin-top:30px">
+    Характеристики
+</h3>
+
+<div id="specifications">
+
+{% if product.specifications %}
+
+    {% for key, value in product.specifications.items() %}
+
+    <div class="spec-row">
+
+        <input
+            type="text"
+            name="spec_key"
+            value="{{ key }}"
+            placeholder="Название"
+        >
+
+        <input
+            type="text"
+            name="spec_value"
+            value="{{ value }}"
+            placeholder="Значение"
+        >
+
+        <button
+            type="button"
+            class="remove-btn"
+            onclick="removeSpec(this)"
+        >
+            ✕
+        </button>
+
+    </div>
+
+    {% endfor %}
+
+{% endif %}
+
+</div>
+
+<button
+    type="button"
+    class="btn btn-blue"
+    onclick="addSpec()"
+>
+    + Добавить характеристику
+</button>
+
+<br><br>
+
 <button
     class="btn btn-green"
 >
@@ -92,4 +144,71 @@
 
 </div>
 
+<script>
+
+function addSpec() {
+
+    const container =
+        document.getElementById(
+            "specifications"
+        );
+
+    container.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="spec-row">
+
+            <input
+                type="text"
+                name="spec_key"
+                placeholder="Название"
+            >
+
+            <input
+                type="text"
+                name="spec_value"
+                placeholder="Значение"
+            >
+
+            <button
+                type="button"
+                class="remove-btn"
+                onclick="removeSpec(this)"
+            >
+                ✕
+            </button>
+
+        </div>
+        `
+    );
+}
+
+function removeSpec(btn) {
+    btn.parentElement.remove();
+}
+
+</script>
 {% endblock %}
+
+<style>
+
+.spec-row{
+    display:flex;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.spec-row input{
+    flex:1;
+}
+
+.remove-btn{
+    background:#ff4444;
+    border:none;
+    color:white;
+    width:40px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+</style>

@@ -1,11 +1,12 @@
 from fastapi import (
     APIRouter,
     Request,
-    Depends,
     UploadFile,
+    Depends,
     File,
     Form,
 )
+import json
 
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -165,31 +166,38 @@ def edit_product_page(
 @router.post(
     "/admin/products/{product_id}/edit"
 )
-def edit_product(
+async def edit_product(
+    request: Request,
     product_id: int,
-    name: str = Form(...),
-    description: str = Form(...),
-    price: float = Form(...),
-    category: str = Form(...),
-    stock: int = Form(...),
     db: Session = Depends(get_db)
 ):
 
-    product = (
-        db.query(Product)
-        .filter(Product.id == product_id)
-        .first()
-    )
+    form = await request.form()
 
-    if product:
+    product = db.query(Product).get(product_id)
 
-        product.name = name
-        product.description = description
-        product.price = price
-        product.category = category
-        product.stock = stock
+    product.name = form["name"]
+    product.description = form["description"]
+    product.price = float(form["price"])
+    product.category = form["category"]
+    product.stock = int(form["stock"])
 
-        db.commit()
+    spec_keys = form.getlist("spec_key")
+    spec_values = form.getlist("spec_value")
+
+    specifications = {}
+
+    for key, value in zip(
+        spec_keys,
+        spec_values
+    ):
+
+        if key.strip():
+            specifications[key] = value
+
+    product.specifications = specifications
+
+    db.commit()
 
     return RedirectResponse(
         "/admin/products",

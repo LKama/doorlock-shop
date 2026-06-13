@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Text
+from sqlalchemy import Column, Integer, String, Float, Text, JSON
 from app.database import Base
 
 class Product(Base):
@@ -18,4 +18,4 @@ class Product(Base):
 
   stock = Column(Integer, default=0)
 
-  specifications = Column(Text, nullable=True)
+  specifications = Column(JSON, default={}, nullable=True)
