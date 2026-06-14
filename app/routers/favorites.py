@@ -38,8 +38,12 @@ def get_favorites(
             result.append({
                 "id": product.id,
                 "name": product.name,
+                "description": product.description,
                 "price": product.price,
-                "image_url": product.image_url
+                "category": product.category,
+                "image_url": product.image_url,
+                "specifications": product.specifications,
+                "stock": product.stock,
             })
 
     return result
